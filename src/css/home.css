@@ -290,10 +290,10 @@
   width: 560px;
 }
 .product-wrapper .product-r .form-control .kucun {
-  color: #ff6a00;
   display: inline-block;
   font-size: 16px;
   margin: 0 6px;
+  margin-right: 20px;
 }
 .product-wrapper .product-r .form-control input {
   width: 60px;

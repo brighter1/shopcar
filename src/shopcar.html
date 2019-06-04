@@ -11,46 +11,39 @@
     <link rel="stylesheet" href="./css/shopcar.css">
     <link rel="stylesheet" href="./font_wrlbk84tlua/iconfont.css">
 
-    <!-- <style>
-        .itemlist {
-            list-style: none;
-            overflow: hidden;
-        }
-        
-        .itemlist .item {
-            border: 1px solid black;
-            margin: 20px;
-            overflow: hidden;
-            position: relative;
-            height: 150px;
-            display: flex;
-        }
-        
-        .itemlist .item>div {
-            
-            overflow: hidden;
-            float: left;
-           
-            margin: auto;
-            
-        }
-        
-        .p-img img {
-            width: 100px;
-        }
-        
-        .p-title {
-            width: 500px;
-        }
-    </style> -->
 
     <script src="./node_modules/jquery/dist/jquery.min.js"></script>
     <script src="./js/cookie.js"></script>
+    <script src="./js/common.js"></script>
     <script>
         $(function() {
+
             var shop = cookie.get('shop');
-            if (shop) {
+            var empty = `<img src="./img/gwc-k.jpg" alt="这里什么都没有啊～">
+                        <a href="./home.html">去逛逛~</a>`;
+
+            var cart = ` <div class="hd">
+                                <ul class="order-title">
+                                    <li class="product">商品名称</li>
+                                    <li class="order-price">订购价</li>
+                                    <li class="num">数量</li>
+                                    <li class="sum">总价</li>
+                                    <li class="operate">操作</li>
+
+                                </ul>
+                            </div>
+                            <div class="bd">
+                                <!-- 购物车数据 -->
+                            </div>
+                        `;
+
+            $('.empty_info').append(empty);
+            $('.cart-panel').empty();
+
+            if (shop && shop != '[]') {
+                console.log(1);
                 $('.empty_info').empty();
+                $('.cart-panel').append(cart);
                 shop = JSON.parse(shop);
                 // console.log(shop);
                 var sum = 0;
@@ -73,7 +66,7 @@
                             });
                             sum += Number((arr[0].num * elm.price).toFixed(2));
 
-                            console.log(arr);
+                            // console.log(arr);
                             template = `
                             <ul class="order-list">
                                 <li class="img-box">
@@ -94,11 +87,11 @@
                                     <span class="price-num">${elm.price}</span>
                                 </li>
                                 <li class="num">
-                                    <input type="number" value="${arr[0].num}" min="1" max="${elm.num}" id="number">
+                                    <input type="number" value="${arr[0].num}" min="1" max="${elm.num}" id="number" data-Id ="${elm.id}">
                                 </li>
                                
                                 <li class="p-sum">￥${(arr[0].num*elm.price).toFixed(2)}</li>
-                                <li class="operate"><a href="#" class="delBtn">删除</a></li>
+                                <li class="operate"><a href="#" class="delBtn" dataId ="${elm.id}">删除</a></li>
                 
                             </ul>
                             `;
@@ -106,49 +99,40 @@
                         })
                         $('#totalMoney').append(sum);
 
-                        // $('#number').change(function() {
+                        //购物车删除功能
+                        $('.delBtn').on('click', function(ev) {
+                            var id = $(ev.target).attr("dataId");
+                            var cok = cookie.get('shop');
+                            cok = JSON.parse(cok);
+                            cok.forEach(function(elm, i) {
+                                if (elm.id == id) {
+                                    cok[i] = '';
+                                    cok.splice(i, 1);
+                                }
+                            })
+                            cok = JSON.stringify(cok);
+                            cookie.set('shop', cok);
+                            location.reload();
+                        })
 
-                        //     console.log(1);
-                        //     console.log($(this).id, $(this).price, $(this).num);
-                        //     addShopCar($(this).id, $(this).price, $(this).num);
-                        //     $('.p-sum')
-                        //     $('#totalMoney').append(sum);
-                        // });
-
+                        //购物车添加功能
+                        // $('#number').on('keyup', function(ev) {
+                        //     var data = $(ev.target).attr("data-Id").val();
+                        //     console.log(data);
+                        //     // var cok = cookie.get('shop');
+                        //     // cok = JSON.parse(cok);
+                        //     // cok.forEach(function(elm, i) {
+                        //     //     if (elm.id == id) {
+                        //     //         cok[i] = '';
+                        //     //         cok.splice(i, 1);
+                        //     //     }
+                        //     // })
+                        //     // cok = JSON.stringify(cok);
+                        //     // cookie.set('shop', cok);
+                        //     // location.reload();
+                        // })
                     }
                 });
-            }
-            // console.log($('.cart-panel .bd:has(ul)').length);
-            // console.log(1);
-
-            // if ($('.cart-panel .bd:has(ul)').length > 0) {
-            //     $('.empty_info').empty();
-            // }
-
-            function addShopCar(id, price, num) {
-                var shop = cookie.get('shop'); //从cookie获取shop
-                var product = {
-                    "id": id,
-                    "price": price,
-                    "num": num
-                };
-
-                if (shop) {
-                    shop = JSON.parse(shop); // cookie中如果有数据 这个数据是json字符串 转成对象
-
-                    if (shop.some(elm => elm.id == id)) {
-                        shop.forEach(function(elm, i) {
-                            elm.id == id ? elm.num = num : null;
-                        });
-                    } else {
-                        shop.push(product);
-                    }
-                    cookie.set('shop', JSON.stringify(shop), 1);
-                } else {
-                    shop = [];
-                    shop.push(product);
-                    cookie.set('shop', JSON.stringify(shop), 1);
-                }
             }
         });
     </script>
@@ -244,25 +228,11 @@
 
     <div class="container">
         <div class="empty_info">
-            <img src="./img/gwc-k.jpg" alt="这里什么都没有啊～">
-            <a href="./home.html">去逛逛~</a>
+            <!-- 空购物车 -->
+
         </div>
 
-        <div class="cart-panel">
-            <div class="hd">
-                <ul class="order-title">
-                    <li class="product">商品名称</li>
-                    <li class="order-price">订购价</li>
-                    <li class="num">数量</li>
-                    <li class="sum">总价</li>
-                    <li class="operate">操作</li>
-
-                </ul>
-            </div>
-            <div class="bd">
-                <!-- 购物车数据 -->
-            </div>
-        </div>
+        <div class="cart-panel"></div>
 
         <div class="set-bar">
             <div class="set-info">
@@ -280,47 +250,6 @@
             <button class="btn btn-primary btn-lg" type="button" id="jiesuan">去结算</button>
         </div>
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <ul class="itemlist">
-        <!-- <li class="item">
-            <div class="c-box">
-                <input type="checkbox" id="p1">
-            </div>
-            <div class="p-img">
-                <img src="./img/1.01.jpg_80x87.jpg" alt="">
-            </div>
-            <div class="p-title">
-                月光女神--白玫瑰11枝，绿色桔梗5枝，小菊3枝，白色石竹梅4枝
-            </div>
-            <div class="p-num">
-                数量：<input type="number" value="1" min="1" max="55">
-            </div>
-            <div class="p-price">
-                单价：236
-            </div>
-            <div class="p-sum">
-                总价：999
-            </div>
-            <div class="del"><a href="#">删除</a></div>
-        </li> -->
-    </ul>
 
     <!-- 底部导航 -->
     <div class="footer-nav">

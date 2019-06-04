@@ -9,6 +9,37 @@
     <link rel="stylesheet" href="./css/top-footer.css">
     <link rel="stylesheet" href="./css/login.css">
     <link rel="stylesheet" href="./font_wrlbk84tlua/iconfont.css">
+
+    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+
+    <script>
+        $(function() {
+            $('#dosubmit').on('click', function() {
+                $.ajax({
+                    type: "post",
+                    url: "../lib/login.php",
+                    data: {
+                        'username': $('#UserName').val(),
+                        'password': $('#PassWord').val()
+                    },
+                    dataType: "",
+                    success: function(response) {
+                        if (response == 'success') {
+                            alert('登录成功！跳转首页...');
+                            location.href = "./home.html";
+                        } else {
+                            alert('用户名或密码不正确，重新登录');
+                            location.href = "./login.html";
+                        }
+                    },
+                    error: function(message) {
+                        alert("调用ajax请求出错");
+                    }
+                })
+            })
+        })
+    </script>
+
 </head>
 
 <body>
@@ -142,17 +173,6 @@
             </div>
         </div>
     </div>
-
-
-
-
-
-
-
-
-
-
-
 
 
 
