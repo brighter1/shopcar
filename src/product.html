@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/top-footer.css">
+    <link rel="stylesheet" href="./css/home.css">
+    <link rel="stylesheet" href="./font_wrlbk84tlua/iconfont.css">
+
+    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../tuupola-jquery_lazyload/jquery.lazyload.min.js"></script>
+    <script src="./js/cookie.js"></script>
+    <script src="./js/common.js"></script>
+
+    <script type="text/javascript" charset="utf-8">
+        $(function() {
+
+        });
+    </script>
+    <script>
+        $(function() {
+            var id = location.search.split('=')[1];
+
+            $.ajax({
+
+                type: "get",
+                url: "../lib/getItem.php",
+                data: {
+                    id: id
+                },
+                dataType: "json",
+
+                success: function(response) {
+                    console.log(response);
+                    var pic = JSON.parse(response.pic);
+                    console.log(pic);
+                    console.log($('#pro-bigimage img'));
+                    var src = '.' + pic[0].src;
+
+                    //大图默认
+                    $('#pro-bigimage img').attr({
+                        src: '.' + pic[0].src,
+                        alt: "big Image"
+                    });
+
+                    //hover小图切大图
+                    $('#swiperController img').hover(function() {
+
+                        var src = $(this).attr("src");
+
+                        $('#bigImage').attr("src", src);
+                    })
+
+                    //小图
+                    $('#swiperController img:first').attr({
+                        src: '.' + pic[0].src,
+                        alt: "small Image"
+                    });
+                    $('#swiperController img:eq(1)').attr({
+                        src: '.' + pic[1].src,
+                        alt: "small Image"
+                    });
+                    $('#swiperController img:eq(2)').attr({
+                        src: '.' + pic[2].src,
+                        alt: "small Image"
+                    });
+                    $('#swiperController img:eq(3)').attr({
+                        src: '.' + pic[3].src,
+                        alt: "small Image"
+                    });
+
+                    //产品信息
+                    $('#product-title').append(response.title);
+
+                    var makings = response.title.split('--')[1];
+                    $('#makings').append(makings);
+
+                    $('#detail').append(response.detail);
+                    $('#wrap').append(response.wrap);
+                    $('#shopPrice').append(response.shopPrice);
+                    $('#Price').append(response.price);
+                    $('.kucun').append(response.num);
+
+                    //详情图片
+                    $('#details p:eq(0) img').attr({
+
+                        'data-original': '.' + pic[4].src
+                    });
+                    $('#details p:eq(1) img').attr({
+                        'data-original': '.' + pic[1].src
+                    });
+                    $('#details p:eq(2) img').attr({
+                        'data-original': '.' + pic[5].src
+                    });
+                    $('#details p:eq(3) img').attr({
+                        'data-original': '.' + pic[3].src
+                    });
+                    $('#details p:eq(4) img').attr({
+                        'data-original': '.' + pic[2].src
+                    });
+                    $('#details p:eq(5) img').attr({
+                        'data-original': '.' + pic[0].src
+                    });
+
+                    $("img.lazy").lazyload({
+                        placeholder: "./img/login_bg.jpg",
+                        effect: "fadeIn",
+                        threshold: 2000
+                    });
+                    // $('body').append(template).find('.add').on('click', function() {
+                    //     addShopCar(response.id, response.price, $('#num').val());
+                    // });
+
+
+                    $('.btn-lg').on('click', function() {
+                        // location.href()
+                        console.log(1);
+                        addShopCar(response.id, response.price, $('#num').val());
+                    });
+
+                }
+            });
+
+
+
+        })
+    </script>
+</head>
+
+<body>
+    <!-- 登录导航 -->
+    <div class="site-nav">
+        <div class="container">
+            <ul class="site-nav-l">
+                <li class="menu">
+                    <a href="javascript:;">
+                        <span class="iconfont  icon-star"></span>收藏鲜花网(hua.com)
+                    </a>
+                </li>
+
+                <li class="menu dropdown-menu">
+                    <a href="javascript:;">
+                        <span class="iconfont  icon-wechat"></span> 关注微信
+
+                        <div class="dropdown">
+                            <img src="./img/wechat_qrcode.jpg" alt="wechat_qrcode" width="124px" height="124px">
+                            <p> <span>扫码关注</span>
+                                <br>
+                                <b>回复"礼物" 更多惊喜！</b></p>
+                        </div>
+                    </a>
+                </li>
+
+                <li class=" menudropdown-menu">
+                    <a href="javascript:;">
+                        <span class="iconfont  icon-phone1"></span> 花礼网app
+                        <div class="dropdown">
+
+                            <img src="./img/app_qrcode.jpg" alt="app_qrcode" width="124px" height="124px">
+                            <p>新人专享100元APP礼包</p>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+            <ul class="site-nav-r">
+                <li class="menu login">
+                    <a href="./login.html" class="login-menu">你好，请登录</a>
+                </li>
+                <li class="site-nav-pipe">|</li>
+                <li class="menu register">
+                    <a href="./register.html" class="register-menu">注册</a>
+                </li>
+                <li class="site-nav-pipe">|</li>
+
+                <li class="menu shopcar">
+                    <a href="./shopcar.html" class="shopcar-menu"><span class="iconfont  icon-shop-car"></span>购物车</a>
+                </li>
+                <li class="site-nav-pipe">|</li>
+
+                <li class="slogan">
+                    中国鲜花礼品网:中国鲜花网领先品牌
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- 登录导航 END -->
+
+    <!-- logo -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="./home.html" class="logo-bd"></a>
+            </div>
+            <div class="service">
+                <a href="javascript:;">
+                    <span class="iconfont icon-phone"></span>400-889-8188 &nbsp;&nbsp;
+                </a>
+                <a href="javascript:;">
+                    <span class="iconfont icon-earphonee"></span>在线客服
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <nav class="common">
+        <div class="container">
+            <ul class="nav">
+                <li><a href="./home.html">首页</a></li>
+                <li><a href="./design.html">设计师臻选鲜花</a></li>
+                <li><a href="./home.html#love">爱情鲜花</a></li>
+                <li><a href="./home.html#zhangbei">长辈鲜花</a></li>
+
+            </ul>
+        </div>
+    </nav>
+    <!-- logo END-->
+
+
+    <div class="container">
+        <div class="product-wrapper">
+            <div class="product-l">
+                <div class="pro-preview">
+                    <div class="pro-bigimage" id="pro-bigimage">
+                        <img src="" alt="" id="bigImage">
+                    </div>
+                    <div class="pro-thumb" id="swiperController">
+                        <img src="" alt="">
+                        <img src="" alt="">
+                        <img src="" alt="">
+                        <img src="" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="product-r">
+                <div class="title">
+                    <h3 class="product-title" id="product-title"></h3>
+                    <p class="product-subtitle">精选材料 简约搭配</p>
+                </div>
+                <div class="attribute">
+                    <dl>
+                        <dt>类 别：</dt>
+                        <dd>鲜花 编 号：9010731</dd>
+                    </dl>
+                    <dl>
+                        <dt>材 料：</dt>
+                        <dd id="makings"></dd>
+                    </dl>
+                    <dl>
+                        <dt>包 装：</dt>
+                        <dd id="wrap"></dd>
+                    </dl>
+                    <dl>
+                        <dt>花 语：</dt>
+                        <dd id="detail"></dd>
+                    </dl>
+                    <dl>
+                        <dt>配 送：
+                            </dt>
+                        <dd>全国 （可配送至全国2000多城市，市区免配送费）</dd>
+                    </dl>
+                </div>
+
+                <div class="price" id="price">
+                    <p><del class="price-original" id="shopPrice">市场价：￥</del></p>
+                    <p class="price-sell">
+                        <b>
+                            ￥<span id="Price"></span>
+                    </b></p>
+                </div>
+
+                <div class="appzx">
+                    <ul>
+                        <li class="mu plft">
+                            <span>促销信息：</span>
+                            <img src="./img/appzx_01.png" alt="">
+                        </li>
+                        <li class="mu dropdown">
+                            <a href="javascript:;">
+                                <span class="iconfont icon-qrcode"></span> 去APP购买
+                                <div class="dropdown-menu dropdown-app">
+                                    <img src="./img/app_qrcode.jpg" alt="app_qrcode" width="124px" height="124px">
+                                    <p>新人专享100元APP礼包</p>
+
+                                </div>
+
+                            </a>
+                        </li>
+                        <li class="mu dropdown">
+                            <a href="javascript:;">
+                                <span class="iconfont icon-qrcode"></span> 去微信购买
+                                <div class="dropdown-menu dropdown-weixin">
+                                    <img src="./img/wechat_qrcode.jpg" alt="wechat_qrcode" width="124px" height="124px">
+                                    <p> <span>扫码关注</span>
+                                        <br>
+                                        <b>回复"礼物" 更多惊喜！</b></p>
+
+                                </div>
+
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+                <div class="form-control">
+                    库存:<span class="kucun"></span>
+
+                    <input type="number" value="1" min="1" max="" id="num">
+                </div>
+                <div class="btn-buy">
+                    <a class="btn btn-primary btn-lg" href="./shopcar.html">
+                        <span class="iconfont icon-shop-car"></span>立即购买
+                    </a>
+
+                    <a href="javascript:;" class="btn btn-link">
+                        <span class="iconfont  icon-xiangqu"></span>收藏
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 热销推荐 
+        <div class="panel panel-info">
+
+            <div class="panel-heading">
+                <h3 class="panel-title">热销推荐</h3>
+            </div>
+             侧边商品 -->
+        <!--  <div class="panel-body">
+                <div class="side-item">
+                    <div class="img-box">
+                        <a href="./product.html?id=1" target="_blank">
+                            <img src="./img/1.01.jpg_80x87.jpg" alt="">
+                        </a>
+                    </div>
+                    <div class="info-cont">
+                        <div class="title">
+                            <a href="./product.html?id=1" target="_blank">
+                                    鲜花/心连心-红玫瑰19枝，龙柳心型小架构
+                            </a>
+                        </div>
+                        <div class="price"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+         热销推荐 END -->
+        <!-- 商品详情 -->
+        <div class="pull-left w970 l230">
+            <div id="details" class="tabs-panel">
+                <p><img class="lazy" data-original="" alt=""></p>
+                <p><img class="lazy" data-original="" alt=""></p>
+                <p><img class="lazy" data-original="" alt=""></p>
+                <p><img class="lazy" data-original="" alt=""></p>
+                <p><img class="lazy" data-original="" alt=""></p>
+                <p><img class="lazy" data-original="" alt=""></p>
+            </div>
+        </div>
+
+        <!-- 商品详情 END -->
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <!-- 底部导航 -->
+    <div class="footer-nav">
+        <a href="./home.html">首页</a>
+        <b>|</b>
+        <a href="javascript:;">关于我们</a>
+        <b>|</b>
+        <a href="javascript:;">媒体报道</a>
+        <b>|</b>
+        <a href="javascript:;">联系方式</a>
+        <b>|</b>
+        <a href="javascript:;">企业团购</a>
+        <b>|</b>
+        <a href="javascript:;">花店入驻</a>
+        <b>|</b>
+        <a href="javascript:;">友情链接</a>
+        <b>|</b>
+        <a href="javascript:;">在线补款</a>
+        <b>|</b>
+        <a href="javascript:;">为什么选择中国鲜花礼品网</a>
+    </div>
+    <!-- 底部导航 END-->
+
+    <!-- 底部 -->
+    <footer>
+        <div class="auth">
+            <img src="./img/f1.png" alt="">
+            <img src="./img/f2.gif" alt="">
+            <img src="./img/f3.gif" alt="">
+            <img src="./img/f4.png" alt="">
+            <img src="./img/f5.gif" alt="">
+            <img src="./img/f6.jpg" alt="">
+            <img src="./img/f7.jpg" alt="">
+            <img src="./img/f8.jpg" alt="">
+            <img src="./img/f9.jpg" alt="">
+        </div>
+        <p>
+            中国花卉协会会员 &nbsp;中国电子商务协会会员 &nbsp; ICP经营许可证：粤B2-20050744 &nbsp;粤公网安备44030502000373号 Copyright © 2005-2019
+        </p>
+        <p>花礼网 （中国鲜花礼品网） &nbsp;www.hua.com &nbsp;深圳市百易信息技术有限公司 &nbsp;中国鲜花网领先品牌，鲜花速递专家！</p>
+    </footer>
+    <!-- 底部 END-->
+
+    <!-- 友情链接 -->
+    <div class="link">
+        <b>友链:</b>&nbsp;
+        <a href="javascript:;">佐卡伊珠宝网</a>&nbsp;
+        <a href="javascript:;">钻石婚戒定制</a>&nbsp;
+        <a href="javascript:;">杂志</a>&nbsp;
+        <a href="javascript:;">宝贝婚团网</a>&nbsp;
+        <a href="javascript:;">苗木</a>&nbsp;
+        <a href="javascript:;">中国青少年艺术教育网</a>&nbsp;
+        <a href="javascript:;">卷皮网</a>&nbsp;
+        <a href="javascript:;">礼无忧网</a>&nbsp;
+        <a href="javascript:;">商标注册</a>&nbsp;
+        <a href="javascript:;">装修</a>&nbsp;
+        <a href="javascript:;">中华取名网</a>
+    </div>
+</body>
+
+</html>

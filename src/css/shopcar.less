@@ -1,0 +1,207 @@
+@charset 'utf-8';
+
+.empty_info {
+    text-align: center;
+    position: relative;
+    padding: 40px 0 20px;
+
+    a {
+        position: absolute;
+        left: 639px;
+        top: 135px;
+        color: #fff;
+        background: #f60;
+        display: inline-block;
+        padding: 3px 10px 3px 13px;
+        border-radius: 6px;
+
+        &:hover{
+            color: #fff!important;
+        }
+    }
+}
+
+img {
+    vertical-align: middle;
+}
+
+.cart-panel {
+    margin-bottom: 20px;
+    border: 1px solid #d9d9d9;
+    overflow: hidden;
+
+    .hd {
+        margin: 0;
+        padding: 0 20px;
+        list-style: none;
+        background-color: #ebebeb;
+        overflow: hidden;
+
+        .order-title {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            overflow: hidden;
+
+            li {
+                font-family: tahoma, arial, 'Hiragino Sans GB', '\5FAE\8F6F\96C5\9ED1', sans-serif;
+                font-weight: bold;
+                display: inline-block;
+                float: left;
+                padding: 10px 0;               
+            }
+
+            .product {
+                width: 700px;
+            }
+
+            .market-price,.order-price,.num,.operate {
+                width: 130px;
+                text-align: center;
+            }
+
+            .operate {
+                float: right;
+               
+            }
+        }
+    }
+
+    .bd {
+        margin: 0;
+        padding:0 20px;
+
+        .order-list {
+            font-size: 12px;
+            margin: 0;
+            padding: 15px 0;
+            list-style: none;
+            border-top: 2px dotted #d9d9d9;
+            overflow: hidden;
+            vertical-align: middle;
+
+            &:first-child {
+                border-top: none;
+            }
+
+            li {
+                line-height: 20px;
+                display: inline-block;
+                float: left;
+
+               
+            }
+
+           
+            .img-box {
+                width: 70px;
+
+                img{
+                    vertical-align: middle;
+                    height: 56px;
+                    width: 50px;
+                }
+            }
+
+            .product {
+                width: 630px;
+                padding: 8px 0;
+
+                span {
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    display: block;
+                }
+            }
+
+            .market-price,.order-price {
+                padding: 0;
+                line-height: 55px;
+                width: 130px;
+                // padding: 18px 0;
+                text-align: center;
+            }
+
+            .p-sum{
+                text-align: center;
+                 padding: 0;
+                line-height: 55px;
+            }
+
+            .market-price{
+                text-decoration: line-through;
+                color: #999999;
+            }
+
+            .order-price ,.p-sum{
+                font-weight: bold;
+                color: #ff6a00;
+
+               
+            }
+
+            .num {
+                width: 130px;
+                margin: 16px 0;
+                text-align: center;
+            }
+
+            .operate {
+            
+                float: right;
+                width: 130px;
+                padding: 8px 0 8px 53px;
+            }
+        }
+    }
+}
+
+.set-bar {
+    margin-bottom: 30px;
+
+    .set-info {
+        font-size: 12px;
+        line-height: 52px;
+        float: left;
+        width: 1080px;
+        height: 52px;
+        padding: 0 20px;
+        border: 1px solid #d9d9d9;
+        border-right: 0;
+
+        .back {
+            float: left;
+            width: 90px;
+        }
+
+        .set-stat {
+            float: right;
+
+            .price {
+                font-size: 18px;
+                font-weight: bold;
+                display: inline-block;
+                color: #ff6a00;
+            }
+        }
+    }
+
+    .btn {
+        font-family: tahoma, arial, 'Hiragino Sans GB', '\5FAE\8F6F\96C5\9ED1', sans-serif;
+        font-weight: bold;
+        float: right;
+        width: 120px;
+        height: 52px;
+    }
+    .btn-primary {
+        color: #ffffff;
+        background-color: #ff6a00;
+        border-color: #ff6a00;
+    }
+}
+
+.price-sign {
+    font-family: arial;
+    margin-right: -4px;
+}
